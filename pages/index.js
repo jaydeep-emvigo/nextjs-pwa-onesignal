@@ -9,7 +9,7 @@ const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
   useEffect(() => {
-    setInterval(() => {
+    setTimeout(() => {
       // Function to skip waiting for OneSignal service worker
       function skipWaitingOneSignal() {
         console.log('🚀 >>> inside skipWaitingOneSignal', )
@@ -38,7 +38,7 @@ export default function Home() {
         }
       }
       skipWaitingOneSignal()
-    }, 5000)
+    }, 10 * 1000)
   }, [])
 
   return (
