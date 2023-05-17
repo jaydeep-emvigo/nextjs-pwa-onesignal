@@ -3,44 +3,36 @@ import {Inter} from 'next/font/google'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useEffect} from 'react'
 
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
-  useEffect(() => {
-    setTimeout(() => {
-      // Function to skip waiting for OneSignal service worker
-      function skipWaitingOneSignal() {
-        console.log('🚀 >>> inside skipWaitingOneSignal', )
-        // Check if service worker is registered
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker
-            .getRegistrations()
-            .then(function (registrations) {
-              // Loop through all service worker registrations
-              console.log('🚀 registrations >>> ', registrations)
-              for (let registration of registrations) {
-                console.log('🚀 registration.active.scriptURL >>> ', registration?.active?.scriptURL)
-                // Check if OneSignal service worker is registered
-                if (
-                  registration.active &&
-                  registration.active.scriptURL.includes(
-                    'OneSignalSDKWorker.js'
-                  )
-                ) {
-                  // Skip waiting for the service worker to activate
-                  console.log('🚀 >>> Finally skip waiting oneSignal service worker' )
-                  registration.waiting.postMessage({type: 'SKIP_WAITING'})
-                }
-              }
-            })
+  function skipWaitingOneSignal(e) {
+    e.preventDefault()
+    console.log('🚀 >>> inside skipWaitingOneSignal')
+    // Check if service worker is registered
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        // Loop through all service worker registrations
+        console.log('🚀 registrations >>> ', registrations)
+        for (let registration of registrations) {
+          console.log(
+            '🚀 registration.active.scriptURL >>> ',
+            registration?.active?.scriptURL
+          )
+          // Check if OneSignal service worker is registered
+          if (
+            registration.active &&
+            registration.active.scriptURL.includes('OneSignalSDKWorker.js')
+          ) {
+            // Skip waiting for the service worker to activate
+            console.log('🚀 >>> Finally skip waiting oneSignal service worker')
+            registration.waiting.postMessage({type: 'SKIP_WAITING'})
+          }
         }
-      }
-      skipWaitingOneSignal()
-    }, 10 * 1000)
-  }, [])
-
+      })
+    }
+  }
   return (
     <>
       <Head>
@@ -73,9 +65,9 @@ export default function Home() {
           />
         </div>
         <h1>
-          {' '}
           Go to <Link href='/page2'> Page2 </Link>
         </h1>
+        <button className='btn' onClick={skipWaitingOneSignal}>Skip Waiting One Signal</button>
       </main>
     </>
   )
