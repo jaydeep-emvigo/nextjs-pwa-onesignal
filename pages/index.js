@@ -12,13 +12,16 @@ export default function Home() {
     setInterval(() => {
       // Function to skip waiting for OneSignal service worker
       function skipWaitingOneSignal() {
+        console.log('🚀 >>> inside skipWaitingOneSignal', )
         // Check if service worker is registered
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker
             .getRegistrations()
             .then(function (registrations) {
               // Loop through all service worker registrations
+              console.log('🚀 registrations >>> ', registrations)
               for (let registration of registrations) {
+                console.log('🚀 registration.active.scriptURL >>> ', registration?.active?.scriptURL)
                 // Check if OneSignal service worker is registered
                 if (
                   registration.active &&
@@ -27,6 +30,7 @@ export default function Home() {
                   )
                 ) {
                   // Skip waiting for the service worker to activate
+                  console.log('🚀 >>> Finally skip waiting oneSignal service worker' )
                   registration.waiting.postMessage({type: 'SKIP_WAITING'})
                 }
               }
