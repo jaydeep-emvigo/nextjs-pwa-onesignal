@@ -23,7 +23,7 @@ export default function Home() {
           // Check if OneSignal service worker is registered
           if (
             registration.active &&
-            registration.active.scriptURL.includes('OneSignalSDKWorker.js')
+            registration.active.scriptURL.includes('sw.js')
           ) {
             // Skip waiting for the service worker to activate
             console.log('🚀 >>> Finally skip waiting oneSignal service worker')
