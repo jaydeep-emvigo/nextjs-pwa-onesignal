@@ -3,10 +3,40 @@ import {Inter} from 'next/font/google'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import {useEffect} from 'react'
 
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
+  useEffect(() => {
+    setInterval(() => {
+      // Function to skip waiting for OneSignal service worker
+      function skipWaitingOneSignal() {
+        // Check if service worker is registered
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .getRegistrations()
+            .then(function (registrations) {
+              // Loop through all service worker registrations
+              for (let registration of registrations) {
+                // Check if OneSignal service worker is registered
+                if (
+                  registration.active &&
+                  registration.active.scriptURL.includes(
+                    'OneSignalSDKWorker.js'
+                  )
+                ) {
+                  // Skip waiting for the service worker to activate
+                  registration.waiting.postMessage({type: 'SKIP_WAITING'})
+                }
+              }
+            })
+        }
+      }
+      skipWaitingOneSignal()
+    }, 5000)
+  }, [])
+
   return (
     <>
       <Head>
