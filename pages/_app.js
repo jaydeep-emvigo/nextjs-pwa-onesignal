@@ -13,6 +13,7 @@ export default function App({Component, pageProps}) {
         notifyButton: {
           enable: true,
         },
+        serviceWorkerPath: './sw.js'
         // allowLocalhostAsSecureOrigin: true,
         // subdomainName: 'bng123',
       })
