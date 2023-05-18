@@ -1,3 +1,4 @@
+// 1
 if (!self.define) {
   let e,
     s = {}
@@ -22,9 +23,9 @@ if (!self.define) {
       location.href
     if (s[i]) return
     let t = {}
-    const o = e => a(e, i),
-      r = {module: {uri: i}, exports: t, require: o}
-    s[i] = Promise.all(c.map(e => r[e] || o(e))).then(e => (n(...e), t))
+    const r = e => a(e, i),
+      o = {module: {uri: i}, exports: t, require: r}
+    s[i] = Promise.all(c.map(e => o[e] || r(e))).then(e => (n(...e), t))
   }
 }
 define(['./workbox-588899ac'], function (e) {
@@ -34,14 +35,6 @@ define(['./workbox-588899ac'], function (e) {
     e.clientsClaim(),
     e.precacheAndRoute(
       [
-        {
-          url: '/_next/static/BJpoK7buWjYwFK8_O3Hla/_buildManifest.js',
-          revision: 'e19fb52fd711daca0ad8fae7bffcaa53',
-        },
-        {
-          url: '/_next/static/BJpoK7buWjYwFK8_O3Hla/_ssgManifest.js',
-          revision: 'b6652df95db52feb4daf4eca35380933',
-        },
         {
           url: '/_next/static/chunks/996-d63ad7fae077247e.js',
           revision: 'd63ad7fae077247e',
@@ -113,6 +106,14 @@ define(['./workbox-588899ac'], function (e) {
         {
           url: '/_next/static/media/d1d9458b69004127-s.woff2',
           revision: '9885d5da3e4dfffab0b4b1f4a259ca27',
+        },
+        {
+          url: '/_next/static/qxn2WrP1afvIh4UM9oBw0/_buildManifest.js',
+          revision: 'e19fb52fd711daca0ad8fae7bffcaa53',
+        },
+        {
+          url: '/_next/static/qxn2WrP1afvIh4UM9oBw0/_ssgManifest.js',
+          revision: 'b6652df95db52feb4daf4eca35380933',
         },
         {url: '/favicon.ico', revision: 'c30c7d42707a47a3f4591831641e50dc'},
         {
