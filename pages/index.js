@@ -7,32 +7,6 @@ import Link from 'next/link'
 const inter = Inter({subsets: ['latin']})
 
 export default function Home() {
-  function skipWaitingOneSignal(e) {
-    e.preventDefault()
-    console.log('🚀 >>> inside skipWaitingOneSignal')
-    // Check if service worker is registered
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        // Loop through all service worker registrations
-        console.log('🚀 registrations >>> ', registrations)
-        for (let registration of registrations) {
-          console.log(
-            '🚀 registration.active.scriptURL >>> ',
-            registration?.active?.scriptURL
-          )
-          // Check if OneSignal service worker is registered
-          if (
-            registration.active &&
-            registration.active.scriptURL.includes('sw.js')
-          ) {
-            // Skip waiting for the service worker to activate
-            console.log('🚀 >>> Finally skip waiting oneSignal service worker')
-            registration.waiting.postMessage({type: 'SKIP_WAITING'})
-          }
-        }
-      })
-    }
-  }
   return (
     <>
       <Head>
@@ -67,7 +41,6 @@ export default function Home() {
         <h1>
           Go to <Link href='/page2'> Page2 </Link>
         </h1>
-        <button className='btn' onClick={skipWaitingOneSignal}>Skip Waiting One Signal</button>
       </main>
     </>
   )
